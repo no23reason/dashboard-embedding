@@ -7,12 +7,12 @@ export const BasicDashboardLoader = () => (
     <>
         <h3>DashboardLoader with FluidLayout with default contentFactory</h3>
         <DashboardLoader dashboard={LdmExt.ExampleDashboard}>
-            {({ dashboard, error, isLoading }) => {
+            {({ dashboard, error, isLoading, theme }) => {
                 if (isLoading) {
                     return <div>Loading...</div>;
                 }
 
-                return <FluidLayout rows={contentFactory(dashboard!)} />;
+                return <FluidLayout theme={theme} rows={contentFactory(dashboard!)} />;
             }}
         </DashboardLoader>
     </>

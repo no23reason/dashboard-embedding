@@ -7,13 +7,14 @@ export const DashboardLoaderWithOverrides = () => (
     <>
         <h3>DashboardLoader with FluidLayout with customized contentFactory</h3>
         <DashboardLoader dashboard={LdmExt.ExampleDashboard}>
-            {({ dashboard, error, isLoading }) => {
+            {({ dashboard, error, isLoading, theme }) => {
                 if (isLoading) {
                     return <div>Loading...</div>;
                 }
 
                 return (
                     <FluidLayout
+                        theme={theme}
                         rows={contentFactory(dashboard!, {
                             columnOverrides: [
                                 {
