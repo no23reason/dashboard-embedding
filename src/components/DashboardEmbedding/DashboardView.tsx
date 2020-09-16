@@ -13,7 +13,7 @@ import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import * as Ldm from "../../ldm/full";
 import { mockDashboard } from "./mocks";
-import { useTheme } from "../../contexts/ThemingProvider";
+import { useTheme } from "../../contexts/ThemeProvider";
 import { Theme } from "./types";
 
 interface IDashboardViewProps {
