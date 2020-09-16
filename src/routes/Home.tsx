@@ -6,6 +6,7 @@ import { BasicDashboardView } from "./examples/BasicDashboardView";
 import { DashboardViewWithFilters } from "./examples/DashboardViewWithFilters";
 import { DashboardViewWithExport } from "./examples/DashboardViewWithExport";
 import { DashboardViewWithDrilling } from "./examples/DashboardViewWithDrilling";
+import { DashboardViewWithThemes } from "./examples/DashboardViewWithThemes";
 import { BasicDashboardLoader } from "./examples/BasicDashboardLoader";
 import { DashboardLoaderWithOverrides } from "./examples/DashboardLoaderWithOverrides";
 import { DashboardLoaderWithoutLayout } from "./examples/DashboardLoaderWithoutLayout";
@@ -17,6 +18,7 @@ const Home = () => {
             <DashboardViewWithFilters />
             <DashboardViewWithExport />
             <DashboardViewWithDrilling />
+            <DashboardViewWithThemes />
 
             <BasicDashboardLoader />
             <DashboardLoaderWithOverrides />

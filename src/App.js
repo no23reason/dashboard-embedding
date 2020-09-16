@@ -4,6 +4,7 @@ import { BackendProvider } from "@gooddata/sdk-ui";
 import AppRouter from "./routes/AppRouter";
 import { useAuth } from "./contexts/Auth";
 import { WorkspaceListProvider } from "./contexts/WorkspaceList";
+import { ThemeProvider } from "./contexts/ThemingProvider";
 
 function App() {
     const { backend } = useAuth();
@@ -11,7 +12,9 @@ function App() {
     return (
         <BackendProvider backend={backend}>
             <WorkspaceListProvider>
-                <AppRouter />
+                <ThemeProvider>
+                    <AppRouter />
+                </ThemeProvider>
             </WorkspaceListProvider>
         </BackendProvider>
     );

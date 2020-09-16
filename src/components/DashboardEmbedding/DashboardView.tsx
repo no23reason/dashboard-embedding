@@ -13,6 +13,8 @@ import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import * as Ldm from "../../ldm/full";
 import { mockDashboard } from "./mocks";
+import { useTheme } from "../../contexts/ThemingProvider";
+import { Theme } from "./types";
 
 interface IDashboardViewProps {
     workspace?: string;
@@ -24,6 +26,7 @@ interface IDashboardViewProps {
     onLoaded?: (dashboard: IDashboard) => void;
     onError?: OnError;
     onExportReady?: OnExportReady;
+    theme?: Theme;
 }
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
@@ -32,6 +35,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     onDrill,
     drillableItems,
     onLoaded,
+    theme,
 }) => {
     const timeoutId = useRef<number>();
     useEffect(() => {
@@ -52,8 +56,12 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const themeFromContext = useTheme();
+
+    const usedTheme = theme ?? themeFromContext;
+
     return (
-        <div style={{ border: "1px solid grey" }}>
+        <div style={{ border: "1px solid grey", color: usedTheme.color }}>
             <h4>Sample dashboard (hardcoded table)</h4>
             <div style={{ height: 200 }}>
                 <PivotTable

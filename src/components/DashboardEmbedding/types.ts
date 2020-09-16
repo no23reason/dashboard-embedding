@@ -49,3 +49,7 @@ export interface IFluidLayoutRow {
     header?: SectionHeader;
     columns: IFluidLayoutColumn[];
 }
+
+export type Theme = {
+    color: string
+}

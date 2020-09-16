@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { FilterContextItem } from "@gooddata/sdk-backend-spi";
 
 import * as LdmExt from "../../ldm/ext";
 import * as Ldm from "../../ldm/full";
 import { DashboardView } from "../../components/DashboardEmbedding";
-import { FilterContextItem } from "@gooddata/sdk-backend-spi";
 
 const filters = [newPositiveAttributeFilter(Ldm.LocationState, ["California", "Florida"])];
 
