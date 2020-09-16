@@ -15,15 +15,20 @@ export const DashboardLoaderWithOverrides = () => (
                 return (
                     <FluidLayout
                         rows={contentFactory(dashboard!, {
-                            columnOverride: (column, mappedColumn) => ({
-                                content: (
-                                    <>
-                                        {mappedColumn.content}
-                                        <img src="https://place-hold.it/200x200" alt="Placeholder" />
-                                        <div>Appending custom content is no problem</div>
-                                    </>
-                                ),
-                            }),
+                            columnOverrides: [
+                                {
+                                    predicate: (rowIndex, columnIndex) => rowIndex === 0 && columnIndex === 1,
+                                    override: (column, mappedColumn) => ({
+                                        content: (
+                                            <>
+                                                {mappedColumn.content}
+                                                <img src="https://place-hold.it/200x200" alt="Placeholder" />
+                                                <div>Appending custom content is no problem</div>
+                                            </>
+                                        ),
+                                    }),
+                                },
+                            ],
                         })}
                     />
                 );

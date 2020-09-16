@@ -13,8 +13,11 @@ type ColumnOverride = (
 type RowOverride = (row: MetadataFluidLayoutRow, mappedRow: IFluidLayoutRow) => Partial<IFluidLayoutRow>;
 
 interface IContentFactoryOverrides {
-    columnOverride?: ColumnOverride;
-    rowOverride?: RowOverride;
+    columnOverrides?: {
+        predicate: (rowIndex: number, columnIndex: number) => boolean;
+        override: ColumnOverride;
+    }[];
+    rowOverrides?: { predicate: (rowIndex: number) => boolean; override: RowOverride }[];
 }
 
 export const contentFactory = (
@@ -26,16 +29,21 @@ export const contentFactory = (
         return [];
     }
 
-    return layout.fluidLayout.rows.map(row => {
+    return layout.fluidLayout.rows.map((row, rowIndex) => {
         const mappedRow = {
             header: row.header,
-            columns: row.columns.map(column => {
+            columns: row.columns.map((column, columnIndex) => {
                 const mappedColumn = {
                     content: <div>{JSON.stringify(column.content)}</div>,
                     size: column.size,
                     style: column.style,
                 };
-                const columnOverride = overrides.columnOverride?.(column, mappedColumn) ?? {};
+
+                const columnOverrideFunction = overrides?.columnOverrides?.find(override =>
+                    override.predicate(rowIndex, columnIndex),
+                )?.override;
+
+                const columnOverride = columnOverrideFunction?.(column, mappedColumn) ?? {};
 
                 return {
                     ...mappedColumn,
@@ -44,7 +52,10 @@ export const contentFactory = (
             }),
         };
 
-        const rowOverride = overrides.rowOverride?.(row, mappedRow) ?? {};
+        const rowOverrideFunction = overrides?.rowOverrides?.find(override => override.predicate(rowIndex))
+            ?.override;
+
+        const rowOverride = rowOverrideFunction?.(row, mappedRow) ?? {};
 
         return {
             ...mappedRow,
