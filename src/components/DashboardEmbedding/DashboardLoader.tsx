@@ -29,9 +29,6 @@ export const DashboardLoader: React.FC<IDashboardLoaderProps> = ({ children }) =
     });
 
     return (
-        <div>
-            DashboardLoader
-            {children({ isLoading, dashboard: isLoading ? undefined : mockDashboard, error: null })}
-        </div>
+        <div>{children({ isLoading, dashboard: isLoading ? undefined : mockDashboard, error: null })}</div>
     );
 };

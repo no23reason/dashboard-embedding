@@ -10,6 +10,29 @@ interface IFluidLayoutProps {
     isRowDropzoneVisible?: boolean;
 }
 
-export const FluidLayout: React.FC<IFluidLayoutProps> = () => {
-    return <div>FluidLayout</div>;
+export const FluidLayout: React.FC<IFluidLayoutProps> = ({ rows }) => {
+    return (
+        <>
+            {rows.map((row, rowIndex) => (
+                <div key={rowIndex} style={{ backgroundColor: "orange" }}>
+                    {(row.header as any)?.title}
+                    <br />
+                    <div style={{ display: "flex" }}>
+                        {row.columns.map((column, columnIndex) => (
+                            <div
+                                key={columnIndex}
+                                style={{
+                                    backgroundColor: "yellow",
+                                    margin: 10,
+                                    width: `${(column.size.xl.width / 12) * 100}%`,
+                                }}
+                            >
+                                {column.content}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))}
+        </>
+    );
 };

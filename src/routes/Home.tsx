@@ -1,6 +1,11 @@
 import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import React, { useState } from "react";
-import { DashboardLoader, DashboardView } from "../components/DashboardEmbedding";
+import {
+    contentFactory,
+    DashboardLoader,
+    DashboardView,
+    FluidLayout,
+} from "../components/DashboardEmbedding";
 
 import Page from "../components/Page";
 import * as LdmExt from "../ldm/ext";
@@ -35,6 +40,16 @@ const Home = () => {
                 drillableItems={drillableItems}
                 onDrill={e => alert("Drilling " + JSON.stringify(e.drillContext, null, 2))}
             />
+            <h3>DashboardLoader with FluidLayout</h3>
+            <DashboardLoader dashboard={LdmExt.ExampleDashboard}>
+                {({ dashboard, error, isLoading }) => {
+                    if (isLoading) {
+                        return <div>Loading...</div>;
+                    }
+
+                    return <FluidLayout rows={contentFactory(dashboard!)} />;
+                }}
+            </DashboardLoader>
             <h3>Maximum flexibility with DashboardLoader</h3>
             <DashboardLoader dashboard={LdmExt.ExampleDashboard}>
                 {({ dashboard, error, isLoading }) => {

@@ -13,6 +13,9 @@ export const mockDashboard: IDashboard = {
         fluidLayout: {
             rows: [
                 {
+                    header: {
+                        title: "Row title",
+                    },
                     columns: [
                         {
                             content: {
@@ -34,7 +37,31 @@ export const mockDashboard: IDashboard = {
                             },
                             size: {
                                 xl: {
-                                    width: 12,
+                                    width: 6,
+                                },
+                            },
+                        },
+                        {
+                            content: {
+                                widget: {
+                                    description: "Widget description",
+                                    drills: [],
+                                    identifier: "example-widget",
+                                    ignoreDashboardFilters: [],
+                                    ref: idRef("example-widget"),
+                                    title: "Example widget",
+                                    type: "insight",
+                                    uri: "/gdc/foo/234",
+                                    insight: {
+                                        identifier: "example-insight",
+                                        uri: "/gdc/foo/321",
+                                        type: "insight",
+                                    },
+                                },
+                            },
+                            size: {
+                                xl: {
+                                    width: 6,
                                 },
                             },
                         },
