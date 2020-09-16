@@ -9,6 +9,9 @@ import {
     OnExportReady,
     OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
+
+import * as Ldm from "../../ldm/full";
 
 interface IDashboardViewProps {
     workspace?: string;
@@ -22,7 +25,7 @@ interface IDashboardViewProps {
     onExportReady?: OnExportReady;
 }
 
-export const DashboardView: React.FC<IDashboardViewProps> = ({ onExportReady }) => {
+export const DashboardView: React.FC<IDashboardViewProps> = ({ onExportReady, filters }) => {
     const timeoutId = useRef<number>();
     useEffect(() => {
         timeoutId.current = window.setTimeout(
@@ -41,5 +44,12 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({ onExportReady }) 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return <div>DashboardView</div>;
+    return (
+        <div style={{ border: "1px solid grey" }}>
+            <h4>Sample dashboard (hardcoded table)</h4>
+            <div style={{ height: 200 }}>
+                <PivotTable measures={[Ldm.$AvgCheckSize]} rows={[Ldm.LocationState]} filters={filters} />
+            </div>
+        </div>
+    );
 };

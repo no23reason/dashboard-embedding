@@ -1,29 +1,34 @@
-import { newRelativeDateFilter } from "@gooddata/sdk-model";
-import React, { useRef, useState } from "react";
+import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import React, { useState } from "react";
 import { DashboardLoader, DashboardView } from "../components/DashboardEmbedding";
 
 import Page from "../components/Page";
 import * as LdmExt from "../ldm/ext";
+import * as Ldm from "../ldm/full";
 import { IExportFunction } from "@gooddata/sdk-ui";
 
+const filters = [newPositiveAttributeFilter(Ldm.LocationState, ["California", "Florida"])];
+
 const Home = () => {
-    const filters = useRef([newRelativeDateFilter(LdmExt.dateDimension, "GDC.time.date", -7, 7)]);
     const [exporter, setExporter] = useState<IExportFunction | undefined>();
 
     return (
         <Page>
+            <h3>Basic usage</h3>
             My app's content, independent of GoodData.
             <DashboardView dashboard={LdmExt.ExampleDashboard} />
-            Maybe some filters?
-            <DashboardView dashboard={LdmExt.ExampleDashboard} filters={filters.current} />
-            Or export handling?
-            {exporter && (
+            <h3>Filters</h3>
+            <DashboardView dashboard={LdmExt.ExampleDashboard} filters={filters} />
+            <h3>Export dashboard</h3>
+            {exporter ? (
                 <button type="button" onClick={() => exporter({ format: "csv" })}>
                     Export
                 </button>
+            ) : (
+                <div>Getting export function...</div>
             )}
             <DashboardView dashboard={LdmExt.ExampleDashboard} onExportReady={e => setExporter(() => e)} />
-            Or if we need more flexibility
+            <h3>Maximum flexibility with DashboardLoader</h3>
             <DashboardLoader dashboard={LdmExt.ExampleDashboard}>
                 {({ dashboard, error, isLoading }) => {
                     if (isLoading) {
