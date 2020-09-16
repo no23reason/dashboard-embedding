@@ -19,13 +19,13 @@ const Home = () => {
             Mock theme provider (changing title color):{" "}
             <input type="color" value={color} onChange={e => setColor(e.target.value)} />
             <BasicDashboardView />
-            <DashboardViewWithFilters />
-            <DashboardViewWithExport />
-            <DashboardViewWithDrilling />
-            <DashboardViewWithThemes />
-            <BasicDashboardLoader />
-            <DashboardLoaderWithOverrides />
-            <DashboardLoaderWithoutLayout />
+            {/* <DashboardViewWithFilters /> */}
+            {/* <DashboardViewWithExport /> */}
+            {/* <DashboardViewWithDrilling /> */}
+            {/* <DashboardViewWithThemes /> */}
+            {/* <BasicDashboardLoader /> */}
+            {/* <DashboardLoaderWithOverrides /> */}
+            {/* <DashboardLoaderWithoutLayout /> */}
         </Page>
     );
 };

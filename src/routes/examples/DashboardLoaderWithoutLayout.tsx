@@ -7,7 +7,7 @@ export const DashboardLoaderWithoutLayout = () => (
     <>
         <h3>DashboardLoader without FluidLayout</h3>
         <DashboardLoader dashboard={LdmExt.ExampleDashboard}>
-            {({ dashboard, error, isLoading }) => {
+            {({ dashboard, error, isLoading, theme }) => {
                 if (isLoading) {
                     return <div>Loading...</div>;
                 }
