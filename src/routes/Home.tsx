@@ -5,9 +5,10 @@ import { DashboardLoader, DashboardView } from "../components/DashboardEmbedding
 import Page from "../components/Page";
 import * as LdmExt from "../ldm/ext";
 import * as Ldm from "../ldm/full";
-import { IExportFunction } from "@gooddata/sdk-ui";
+import { HeaderPredicates, IExportFunction } from "@gooddata/sdk-ui";
 
 const filters = [newPositiveAttributeFilter(Ldm.LocationState, ["California", "Florida"])];
+const drillableItems = [HeaderPredicates.attributeItemNameMatch("California")];
 
 const Home = () => {
     const [exporter, setExporter] = useState<IExportFunction | undefined>();
@@ -28,6 +29,12 @@ const Home = () => {
                 <div>Getting export function...</div>
             )}
             <DashboardView dashboard={LdmExt.ExampleDashboard} onExportReady={e => setExporter(() => e)} />
+            <h3>Drilling</h3>
+            <DashboardView
+                dashboard={LdmExt.ExampleDashboard}
+                drillableItems={drillableItems}
+                onDrill={e => alert("Drilling " + JSON.stringify(e.drillContext, null, 2))}
+            />
             <h3>Maximum flexibility with DashboardLoader</h3>
             <DashboardLoader dashboard={LdmExt.ExampleDashboard}>
                 {({ dashboard, error, isLoading }) => {

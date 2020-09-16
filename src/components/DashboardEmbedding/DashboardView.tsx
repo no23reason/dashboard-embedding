@@ -25,7 +25,12 @@ interface IDashboardViewProps {
     onExportReady?: OnExportReady;
 }
 
-export const DashboardView: React.FC<IDashboardViewProps> = ({ onExportReady, filters }) => {
+export const DashboardView: React.FC<IDashboardViewProps> = ({
+    onExportReady,
+    filters,
+    onDrill,
+    drillableItems,
+}) => {
     const timeoutId = useRef<number>();
     useEffect(() => {
         timeoutId.current = window.setTimeout(
@@ -48,7 +53,13 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({ onExportReady, fi
         <div style={{ border: "1px solid grey" }}>
             <h4>Sample dashboard (hardcoded table)</h4>
             <div style={{ height: 200 }}>
-                <PivotTable measures={[Ldm.$AvgCheckSize]} rows={[Ldm.LocationState]} filters={filters} />
+                <PivotTable
+                    measures={[Ldm.$AvgCheckSize]}
+                    rows={[Ldm.LocationState]}
+                    filters={filters}
+                    onDrill={onDrill}
+                    drillableItems={drillableItems}
+                />
             </div>
         </div>
     );
