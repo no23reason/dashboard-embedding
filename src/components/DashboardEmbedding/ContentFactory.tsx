@@ -1,27 +1,45 @@
 import React from "react";
-import { IDashboard } from "@gooddata/sdk-backend-spi";
+import {
+    IDashboard,
+    IFluidLayoutRow as MetadataFluidLayoutRow,
+    IFluidLayoutColumn as MetadataFluidLayoutColumn,
+} from "@gooddata/sdk-backend-spi";
 import { IFluidLayoutRow, IFluidLayoutColumn } from "./types";
 
-export const contentFactory = (dashboard: IDashboard): IFluidLayoutRow[] => {
+type ColumnMapper = (column: MetadataFluidLayoutColumn) => IFluidLayoutColumn;
+type RowMapper = (row: MetadataFluidLayoutRow, columnMapper: ColumnMapper) => IFluidLayoutRow;
+
+interface IContentFactoryMappers {
+    columnMapper?: ColumnMapper;
+    rowMapper?: RowMapper;
+}
+
+const defaultMappers: IContentFactoryMappers = {
+    columnMapper: column => {
+        return {
+            content: <div>{JSON.stringify(column.content)}</div>,
+            size: column.size,
+            style: column.style,
+        };
+    },
+    rowMapper: (row, columnMapper) => {
+        return {
+            header: row.header,
+            columns: row.columns.map(columnMapper),
+        };
+    },
+};
+
+export const contentFactory = (
+    dashboard: IDashboard,
+    mappers: IContentFactoryMappers = defaultMappers,
+): IFluidLayoutRow[] => {
     const { layout } = dashboard;
     if (!layout) {
         return [];
     }
 
-    return layout.fluidLayout.rows.map(
-        (row): IFluidLayoutRow => {
-            return {
-                header: row.header,
-                columns: row.columns.map(
-                    (column): IFluidLayoutColumn => {
-                        return {
-                            content: <div>{JSON.stringify(column.content)}</div>,
-                            size: column.size,
-                            style: column.style,
-                        };
-                    },
-                ),
-            };
-        },
-    );
+    const { rowMapper = defaultMappers.rowMapper!, columnMapper = defaultMappers.columnMapper! } = mappers;
+
+    return layout.fluidLayout.rows.map(row => rowMapper(row, columnMapper));
 };

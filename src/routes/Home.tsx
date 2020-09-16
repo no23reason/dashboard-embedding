@@ -40,7 +40,7 @@ const Home = () => {
                 drillableItems={drillableItems}
                 onDrill={e => alert("Drilling " + JSON.stringify(e.drillContext, null, 2))}
             />
-            <h3>DashboardLoader with FluidLayout</h3>
+            <h3>DashboardLoader with FluidLayout with default contentFactory</h3>
             <DashboardLoader dashboard={LdmExt.ExampleDashboard}>
                 {({ dashboard, error, isLoading }) => {
                     if (isLoading) {
@@ -48,6 +48,30 @@ const Home = () => {
                     }
 
                     return <FluidLayout rows={contentFactory(dashboard!)} />;
+                }}
+            </DashboardLoader>
+            <h3>DashboardLoader with FluidLayout with customized contentFactory</h3>
+            <DashboardLoader dashboard={LdmExt.ExampleDashboard}>
+                {({ dashboard, error, isLoading }) => {
+                    if (isLoading) {
+                        return <div>Loading...</div>;
+                    }
+
+                    return (
+                        <FluidLayout
+                            rows={contentFactory(dashboard!, {
+                                columnMapper: column => ({
+                                    content: (
+                                        <>
+                                            <img src="https://place-hold.it/200x200" alt="Placeholder" />
+                                            <div>Custom content is no problem</div>
+                                        </>
+                                    ),
+                                    size: column.size,
+                                }),
+                            })}
+                        />
+                    );
                 }}
             </DashboardLoader>
             <h3>Maximum flexibility with DashboardLoader</h3>
