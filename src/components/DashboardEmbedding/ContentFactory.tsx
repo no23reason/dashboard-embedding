@@ -6,8 +6,11 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IFluidLayoutRow, IFluidLayoutColumn } from "./types";
 
-type ColumnOverride = (column: MetadataFluidLayoutColumn) => Partial<IFluidLayoutColumn>;
-type RowOverride = (row: MetadataFluidLayoutRow) => Partial<IFluidLayoutRow>;
+type ColumnOverride = (
+    column: MetadataFluidLayoutColumn,
+    mappedColumn: IFluidLayoutColumn,
+) => Partial<IFluidLayoutColumn>;
+type RowOverride = (row: MetadataFluidLayoutRow, mappedRow: IFluidLayoutRow) => Partial<IFluidLayoutRow>;
 
 interface IContentFactoryOverrides {
     columnOverride?: ColumnOverride;
@@ -32,7 +35,7 @@ export const contentFactory = (
                     size: column.size,
                     style: column.style,
                 };
-                const columnOverride = overrides.columnOverride?.(column) ?? {};
+                const columnOverride = overrides.columnOverride?.(column, mappedColumn) ?? {};
 
                 return {
                     ...mappedColumn,
@@ -41,7 +44,7 @@ export const contentFactory = (
             }),
         };
 
-        const rowOverride = overrides.rowOverride?.(row) ?? {};
+        const rowOverride = overrides.rowOverride?.(row, mappedRow) ?? {};
 
         return {
             ...mappedRow,
