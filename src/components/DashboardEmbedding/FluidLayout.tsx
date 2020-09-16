@@ -10,6 +10,9 @@ interface IFluidLayoutProps {
     isRowDropzoneVisible?: boolean;
 }
 
+/**
+ * Component used to render content in a responsive way.
+ */
 export const FluidLayout: React.FC<IFluidLayoutProps> = ({ rows }) => {
     return (
         <>

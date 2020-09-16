@@ -16,6 +16,9 @@ interface IDashboardLoaderProps {
     children: DashboardLoaderChildren;
 }
 
+/**
+ * Component allowing the flexible embedding of dashboards. It handles the downloading of the dashboard.
+ */
 export const DashboardLoader: React.FC<IDashboardLoaderProps> = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
 

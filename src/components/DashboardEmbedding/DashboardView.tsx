@@ -29,6 +29,9 @@ interface IDashboardViewProps {
     theme?: Theme;
 }
 
+/**
+ * Component allowing the simple embedding of dashboards. It handles the downloading and rendering of the dashboard.
+ */
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     onExportReady,
     filters,

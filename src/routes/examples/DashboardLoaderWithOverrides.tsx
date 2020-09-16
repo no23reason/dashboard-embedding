@@ -18,10 +18,10 @@ export const DashboardLoaderWithOverrides = () => (
                             columnOverrides: [
                                 {
                                     predicate: (rowIndex, columnIndex) => rowIndex === 0 && columnIndex === 1,
-                                    override: (column, mappedColumn) => ({
+                                    override: (dashboardColumn, layoutColumn) => ({
                                         content: (
                                             <>
-                                                {mappedColumn.content}
+                                                {layoutColumn.content}
                                                 <img src="https://place-hold.it/100x100" alt="Placeholder" />
                                                 <div>Appending custom content is no problem</div>
                                             </>
@@ -30,7 +30,7 @@ export const DashboardLoaderWithOverrides = () => (
                                 },
                                 {
                                     predicate: (rowIndex, columnIndex) => rowIndex === 1 && columnIndex === 0,
-                                    override: (column, mappedColumn) => ({
+                                    override: (dashboardColumn, layoutColumn) => ({
                                         content: (
                                             <>
                                                 <img src="https://place-hold.it/100x100" alt="Placeholder" />
