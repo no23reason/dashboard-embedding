@@ -1,7 +1,7 @@
 import React from "react";
 import { IFluidLayoutRow } from "./types";
 
-export interface IFluidLayoutProps {
+interface IFluidLayoutProps {
     rows: IFluidLayoutRow[];
     visualizeRows?: boolean;
     classNames?: string;

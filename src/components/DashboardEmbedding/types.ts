@@ -49,12 +49,3 @@ export interface IFluidLayoutRow {
     header?: SectionHeader;
     columns: IFluidLayoutColumn[];
 }
-
-export interface IFluidLayoutProps {
-    rows: IFluidLayoutRow[];
-    visualizeRows?: boolean;
-    classNames?: string;
-    onMouseLeave?: () => void;
-    activeHeaderRowId?: string;
-    isRowDropzoneVisible?: boolean;
-}
