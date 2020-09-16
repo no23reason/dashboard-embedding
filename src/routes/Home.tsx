@@ -60,14 +60,13 @@ const Home = () => {
                     return (
                         <FluidLayout
                             rows={contentFactory(dashboard!, {
-                                columnMapper: column => ({
+                                columnOverride: column => ({
                                     content: (
                                         <>
                                             <img src="https://place-hold.it/200x200" alt="Placeholder" />
                                             <div>Custom content is no problem</div>
                                         </>
                                     ),
-                                    size: column.size,
                                 }),
                             })}
                         />

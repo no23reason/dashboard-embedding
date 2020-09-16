@@ -6,40 +6,46 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IFluidLayoutRow, IFluidLayoutColumn } from "./types";
 
-type ColumnMapper = (column: MetadataFluidLayoutColumn) => IFluidLayoutColumn;
-type RowMapper = (row: MetadataFluidLayoutRow, columnMapper: ColumnMapper) => IFluidLayoutRow;
+type ColumnOverride = (column: MetadataFluidLayoutColumn) => Partial<IFluidLayoutColumn>;
+type RowOverride = (row: MetadataFluidLayoutRow) => Partial<IFluidLayoutRow>;
 
-interface IContentFactoryMappers {
-    columnMapper?: ColumnMapper;
-    rowMapper?: RowMapper;
+interface IContentFactoryOverrides {
+    columnOverride?: ColumnOverride;
+    rowOverride?: RowOverride;
 }
-
-const defaultMappers: IContentFactoryMappers = {
-    columnMapper: column => {
-        return {
-            content: <div>{JSON.stringify(column.content)}</div>,
-            size: column.size,
-            style: column.style,
-        };
-    },
-    rowMapper: (row, columnMapper) => {
-        return {
-            header: row.header,
-            columns: row.columns.map(columnMapper),
-        };
-    },
-};
 
 export const contentFactory = (
     dashboard: IDashboard,
-    mappers: IContentFactoryMappers = defaultMappers,
+    overrides: IContentFactoryOverrides = {},
 ): IFluidLayoutRow[] => {
     const { layout } = dashboard;
     if (!layout) {
         return [];
     }
 
-    const { rowMapper = defaultMappers.rowMapper!, columnMapper = defaultMappers.columnMapper! } = mappers;
+    return layout.fluidLayout.rows.map(row => {
+        const mappedRow = {
+            header: row.header,
+            columns: row.columns.map(column => {
+                const mappedColumn = {
+                    content: <div>{JSON.stringify(column.content)}</div>,
+                    size: column.size,
+                    style: column.style,
+                };
+                const columnOverride = overrides.columnOverride?.(column) ?? {};
 
-    return layout.fluidLayout.rows.map(row => rowMapper(row, columnMapper));
+                return {
+                    ...mappedColumn,
+                    ...columnOverride,
+                };
+            }),
+        };
+
+        const rowOverride = overrides.rowOverride?.(row) ?? {};
+
+        return {
+            ...mappedRow,
+            ...rowOverride,
+        };
+    });
 };
