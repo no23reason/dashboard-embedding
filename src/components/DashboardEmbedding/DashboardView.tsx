@@ -12,6 +12,7 @@ import {
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import * as Ldm from "../../ldm/full";
+import { mockDashboard } from "./mocks";
 
 interface IDashboardViewProps {
     workspace?: string;
@@ -30,6 +31,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     filters,
     onDrill,
     drillableItems,
+    onLoaded,
 }) => {
     const timeoutId = useRef<number>();
     useEffect(() => {
@@ -40,6 +42,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                     return Promise.resolve({ uri: "/gdc/export/123" });
                 };
                 onExportReady?.(mockExporter);
+                onLoaded?.(mockDashboard);
             },
             3000,
             [],

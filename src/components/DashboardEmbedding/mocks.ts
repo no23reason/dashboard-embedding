@@ -1,6 +1,8 @@
 import { IDashboard } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 
+import * as Ldm from "../../ldm/full";
+
 export const mockDashboard: IDashboard = {
     created: "2020-09-16",
     description: "Some description",
@@ -69,5 +71,22 @@ export const mockDashboard: IDashboard = {
                 },
             ],
         },
+    },
+    filterContext: {
+        created: "2020-09-16",
+        description: "Some description",
+        identifier: "example-dash",
+        ref: idRef("example-dash"),
+        title: "Example dashboard",
+        filters: [
+            {
+                attributeFilter: {
+                    attributeElements: [idRef("usa")],
+                    displayForm: Ldm.LocationCountry.attribute.displayForm,
+                    negativeSelection: false,
+                },
+            },
+        ],
+        uri: "/gdc/md/444",
     },
 };
